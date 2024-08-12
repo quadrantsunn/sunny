@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Function Sample App</title>
+</head>
+<body>
+    <h1>Azure Function Greeting</h1>
+    
+    <form id="greeting-form">
+        <label for="name">Enter your name:</label>
+        <input type="text" id="name" required>
+        <button type="submit">Greet Me!</button>
+    </form>
+    
+    <h2>Response from Azure Function:</h2>
+    <p id="response"></p>
+
+    <script>
+        document.getElementById('greeting-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const url = `http://localhost:7071/api/HttpTrigger1?name=${name}`;  // Replace with your Azure Function URL if deployed
+            
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('response').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('response').textContent = 'An error occurred!';
+                });
+        });
+    </script>
+</body>
+</html>
